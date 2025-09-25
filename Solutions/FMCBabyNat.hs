@@ -58,14 +58,21 @@ odd (S (S n)) = odd n
 -- It behaves like subtraction, except that it returns 0
 -- when "normal" subtraction would return a negative number.
 monus :: Nat -> Nat -> Nat
-monus = undefined
+monus O n = O
+monus n O = n  
+monus (S n) (S m) = monus n m
+
 
 (-*) :: Nat -> Nat -> Nat
 (-*) = monus
 
+infixl 6 -*
+
 -- multiplication
 (*) :: Nat -> Nat -> Nat
-(*) = undefined
+O * n = O
+n * O = O
+(S n) * (S m) = (n * S m) + S m 
 
 infixl 7 *
 

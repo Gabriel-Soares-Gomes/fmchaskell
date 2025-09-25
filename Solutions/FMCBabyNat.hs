@@ -1,7 +1,7 @@
 module FMCBabyNat where
 
 -- Do not alter this import!
-import Prelude ( Show(..) , Eq(..) , undefined )
+import Prelude ( Show(..) , Eq(..) , undefined, Num (negate) )
 
 -- Define evenerything that is undefined,
 -- without using standard Haskell functions.
@@ -34,18 +34,24 @@ infixl 6 +
 
 -- Output: O means False, S O means True
 isZero :: Nat -> Nat
-isZero = undefined
+isZero O = S O
+isZero (S n) = O
 
 -- pred is the predecessor but we define zero's to be zero
 pred :: Nat -> Nat
-pred = undefined
+pred O = O
+pred (S n) = n 
 
 -- Output: O means False, S O means True
 even :: Nat -> Nat
-even = undefined
+even (S O) = O 
+even O = S O
+even (S ( S n)) = even n 
 
 odd :: Nat -> Nat
-odd = undefined
+odd O = O
+odd (S O) = S O
+odd (S (S n)) = odd n
 
 -- This is called the dotminus or monus operator
 -- (also: proper subtraction, arithmetic subtraction, ...).

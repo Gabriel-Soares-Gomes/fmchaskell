@@ -78,17 +78,31 @@ infixl 7 *
 
 -- exponentiation
 (^) :: Nat -> Nat -> Nat
-(^) = undefined
+n ^ O = one
+n ^ S m = n ^ m * n
 
--- decide: infix? ? ^
+infixr 8 ^
+
+-- less than
+(<) :: Nat -> Nat -> Nat
+O < S n = S O 
+n < O = O
+S n < S m = n < m
 
 -- quotient
 (/) :: Nat -> Nat -> Nat
-(/) = undefined
+n / O = undefined
+n / m = 
+  case n < m of
+    S O -> O
+    O -> S ((n -* m) / m)
+
+infixr 7 /
 
 -- remainder
 (%) :: Nat -> Nat -> Nat
-(%) = undefined
+n % m = n -* (m * (n / m))
+
 
 -- divides
 -- just for a change, we start by defining the "symbolic" operator

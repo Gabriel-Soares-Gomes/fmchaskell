@@ -140,4 +140,10 @@ sg _ = S O
 
 -- lo b a is the floor of the logarithm base b of a
 lo :: Nat -> Nat -> Nat
-lo = undefined
+lo O n = undefined
+lo n O = undefined
+lo (S O) n = undefined
+lo n m =
+  case m < n of
+    S O -> O
+    O -> S (lo n (m / n))

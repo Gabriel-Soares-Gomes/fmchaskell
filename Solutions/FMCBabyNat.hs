@@ -109,7 +109,11 @@ n % m = n -* (m * (n / m))
 -- and then define `devides` as a synonym to it
 -- again, outputs: O means False, S O means True
 (|||) :: Nat -> Nat -> Nat
-(|||) = undefined
+n ||| m =
+  case m % n of
+    O -> S O
+    S n -> O
+
 
 -- x `absDiff` y = |x - y|
 -- (Careful here: this - is the actual minus operator we know from the integers!)
@@ -129,4 +133,3 @@ sg = undefined
 -- lo b a is the floor of the logarithm base b of a
 lo :: Nat -> Nat -> Nat
 lo = undefined
-

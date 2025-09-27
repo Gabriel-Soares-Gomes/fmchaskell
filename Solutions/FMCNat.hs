@@ -103,10 +103,12 @@ pred (S n) = n
 even :: Nat -> Bool
 even O = True
 even (S O) = False
-even (S (S n)) = True 
+even (S (S n)) = even n
 
 odd :: Nat -> Bool
-odd n = not(even n)
+odd O = False
+odd (S O) = True
+odd (S (S n)) = odd n
 
 
 

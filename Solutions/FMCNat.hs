@@ -56,11 +56,16 @@ instance Ord Nat where
     -- Howevener, you should define them WITHOUT using (<=).
     -- Both are binary functions: max m n = ..., etc.
 
-    min n m = if n <= m then n else m
+    min :: Nat -> Nat -> Nat
+    min O n = n
+    min n O = n
+    min (S n) (S m) = S (min n m)
+   
 
     max :: Nat -> Nat -> Nat
-    max n m = if n <= m then m else n
-
+    max O n = n
+    max n O = n
+    max (S n) (S m) = S (max n m)
 
 ----------------------------------------------------------------
 -- some sugar
@@ -89,13 +94,18 @@ isZero (S n) = False
 
 -- pred is the predecessor but we define zero's to be zero
 pred :: Nat -> Nat
-pred = undefined
+pred O = O
+pred (S n) = n 
+
 
 even :: Nat -> Bool
-even = undefined
+even O = True
+even (S O) = False
+even (S (S n)) = True 
 
 odd :: Nat -> Bool
-odd = undefined
+odd n = not(even n)
+
 
 
 ----------------------------------------------------------------

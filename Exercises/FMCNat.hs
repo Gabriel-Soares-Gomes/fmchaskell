@@ -99,7 +99,8 @@ odd = undefined
 -- It behaves like subtraction, except that it returns 0
 -- when "normal" subtraction would return a negative number.
 monus :: Nat -> Nat -> Nat
-monus = undefined
+monus = (-*)
+(<->) = (-*)
 
 (-*) :: Nat -> Nat -> Nat
 (-*) = undefined

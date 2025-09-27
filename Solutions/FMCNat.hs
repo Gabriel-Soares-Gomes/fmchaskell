@@ -1,4 +1,5 @@
 {-# LANGUAGE GADTs #-}
+{-# OPTIONS_GHC -Wno-overlapping-patterns #-}
 
 module ExNat where
 
@@ -17,6 +18,7 @@ import Prelude
     , error
     , otherwise
     )
+import Distribution.Compat.Lens (_1)
 
 -- Define evenerything that is undefined,
 -- without using standard Haskell functions.
@@ -114,22 +116,35 @@ odd n = not(even n)
 
 -- addition
 (<+>) :: Nat -> Nat -> Nat
-(<+>) = undefined
+n <+> O = n
+n <+> (S m) = S (n + m)
+
+
+
+
 
 -- This is called the dotminus or monus operator
 -- (also: proper subtraction, arithmetic subtraction, ...).
 -- It behaves like subtraction, except that it returns 0
 -- when "normal" subtraction would return a negative number.
 monus :: Nat -> Nat -> Nat
-monus = undefined
+monus O n = O
+monus n O = n  
+monus (S n) (S m) = monus n m
+
 
 (-*) :: Nat -> Nat -> Nat
 (-*) = monus
+
+(<->) :: Nat -> Nat -> Nat
 (<->) = (-*)
 
 -- multiplication
 times :: Nat -> Nat -> Nat
-times = undefined
+times O n = O
+times n O = O
+times (S n) (S m) = times n (S m) + S m
+
 
 (<*>) :: Nat -> Nat -> Nat
 (<*>) = times

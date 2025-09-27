@@ -54,6 +54,11 @@ instance Ord Nat where
     S n <= O = False
     S n <= S m = n <= m
 
+    (<) :: Nat -> Nat -> Bool
+    O < S n = True
+    n < O = False
+    S n < S m = n < m
+
     -- Ord does not REQUIRE defining min and max.
     -- Howevener, you should define them WITHOUT using (<=).
     -- Both are binary functions: max m n = ..., etc.
@@ -153,25 +158,27 @@ times (S n) (S m) = times n (S m) + S m
 
 -- power / exponentiation
 pow :: Nat -> Nat -> Nat
-pow = undefined
+pow n O = one
+pow n (S m) = pow n m * n
 
 exp :: Nat -> Nat -> Nat
-exp = undefined
+exp = pow
 
 (<^>) :: Nat -> Nat -> Nat
-(<^>) = undefined
+(<^>) = pow
 
 -- quotient
 (</>) :: Nat -> Nat -> Nat
-(</>) = undefined
+n </> O = undefined
+n </> m = if m <= n then S ((n -* m) </> m) else O
 
 -- remainder
 (<%>) :: Nat -> Nat -> Nat
-(<%>) = undefined
+n <%> m = n -* (m <*> (n </> m))
 
 -- euclidean division
 eucdiv :: (Nat, Nat) -> (Nat, Nat)
-eucdiv = undefined
+eucdiv (n, m) = (n </> m, n <%> m)
 
 -- divides
 (<|>) :: Nat -> Nat -> Bool
@@ -226,6 +233,7 @@ instance Num Nat where
     (-) :: Nat -> Nat -> Nat
     (-) = (<->)
 
+    abs :: Nat -> Nat
     abs n = n
     signum = sg
     fromInteger x

@@ -46,6 +46,8 @@ instance Eq Nat where
 
 instance Ord Nat where
 
+    (<=) :: Nat -> Nat -> Bool
+    O <= O = True
     O <= S n = True
     S n <= O = False
     S n <= S m = n <= m
@@ -54,9 +56,10 @@ instance Ord Nat where
     -- Howevener, you should define them WITHOUT using (<=).
     -- Both are binary functions: max m n = ..., etc.
 
-    min = undefined
+    min n m = if n <= m then n else m
 
-    max = undefined
+    max :: Nat -> Nat -> Nat
+    max n m = if n <= m then m else n
 
 
 ----------------------------------------------------------------
@@ -81,7 +84,8 @@ ten = S nine
 ----------------------------------------------------------------
 
 isZero :: Nat -> Bool
-isZero = undefined
+isZero O = True
+isZero (S n) = False
 
 -- pred is the predecessor but we define zero's to be zero
 pred :: Nat -> Nat

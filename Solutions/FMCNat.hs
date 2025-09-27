@@ -34,15 +34,21 @@ instance Show Nat where
 
     -- zero  should be shown as O
     -- three should be shown as SSSO
-    show = undefined
+    show O = "O"
+    show (S n) = "S" ++ show n
+
 
 instance Eq Nat where
-
-    (==) = undefined
+    O == O = True
+    O == S n = False
+    S n == O = False
+    S n == S m = n == m
 
 instance Ord Nat where
 
-    (<=) = undefined
+    O <= S n = True
+    S n <= O = False
+    S n <= S m = n <= m
 
     -- Ord does not REQUIRE defining min and max.
     -- Howevener, you should define them WITHOUT using (<=).
@@ -57,7 +63,7 @@ instance Ord Nat where
 -- some sugar
 ----------------------------------------------------------------
 
-zero, one, two, three, four, five, six, seven, eight :: Nat
+zero, one, two, three, four, five, six, seven, eight, nine, ten :: Nat
 zero  = O
 one   = S zero
 two   = S one
@@ -67,6 +73,8 @@ five  = S four
 six   = S five
 seven = S six
 eight = S seven
+nine = S eight
+ten = S nine
 
 ----------------------------------------------------------------
 -- internalized predicates
@@ -102,7 +110,8 @@ monus :: Nat -> Nat -> Nat
 monus = undefined
 
 (-*) :: Nat -> Nat -> Nat
-(-*) = undefined
+(-*) = monus
+(<->) = (-*)
 
 -- multiplication
 times :: Nat -> Nat -> Nat
@@ -177,9 +186,15 @@ fromNat = undefined
 -- Voilá: we can now easily make Nat an instance of Num.
 instance Num Nat where
 
+    (+) :: Nat -> Nat -> Nat
     (+) = (<+>)
+
+    (*) :: Nat -> Nat -> Nat
     (*) = (<*>)
+
+    (-) :: Nat -> Nat -> Nat
     (-) = (<->)
+
     abs n = n
     signum = sg
     fromInteger x

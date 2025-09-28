@@ -64,8 +64,8 @@ instance Ord Nat where
     -- Both are binary functions: max m n = ..., etc.
 
     min :: Nat -> Nat -> Nat
-    min O n = n
-    min n O = n
+    min O _ = O
+    min _ O = O
     min (S n) (S m) = S (min n m)
    
 
@@ -182,10 +182,12 @@ eucdiv (n, m) = (n </> m, n <%> m)
 
 -- divides
 (<|>) :: Nat -> Nat -> Bool
-(<|>) = undefined
+n <|> m =
+  case m <%> n of
+    O -> True
+    S n -> False
 
 divides = (<|>)
-
 
 -- distance between nats
 -- x `dist` y = |x - y|

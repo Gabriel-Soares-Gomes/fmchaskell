@@ -70,8 +70,9 @@ instance Ord Nat where
 
     max :: Nat -> Nat -> Nat
     max (S n) (S m) = S (max n m)
-    max _ n = n
-    max n _ = n
+    max O n = n
+    max n O = n
+
 
 ----------------------------------------------------------------
 -- some sugar

@@ -126,7 +126,7 @@ odd (S (S n)) = odd n
 n <+> O = n
 n <+> (S m) = S (n + m)
 
-
+infixl 1 <+>
 
 
 
@@ -139,6 +139,7 @@ monus O n = O
 monus n O = n  
 monus (S n) (S m) = monus n m
 
+infixl 1 <->
 
 (-*) :: Nat -> Nat -> Nat
 (-*) = monus
@@ -156,6 +157,8 @@ times (S n) (S m) = times n (S m) + S m
 (<*>) :: Nat -> Nat -> Nat
 (<*>) = times
 
+infixl 2 <*>
+
 -- power / exponentiation
 pow :: Nat -> Nat -> Nat
 pow n O = one
@@ -167,10 +170,14 @@ exp = pow
 (<^>) :: Nat -> Nat -> Nat
 (<^>) = pow
 
+infixr 3 <^>
+
 -- quotient
 (</>) :: Nat -> Nat -> Nat
 n </> O = undefined
 n </> m = if m <= n then S ((n -* m) </> m) else O
+
+infix 2 </>
 
 -- remainder
 (<%>) :: Nat -> Nat -> Nat
@@ -193,22 +200,30 @@ divides = (<|>)
 -- x `dist` y = |x - y|
 -- (Careful here: this - is the real minus operator!)
 dist :: Nat -> Nat -> Nat
-dist = undefined
+dist O n = n
+dist n O = n
+dist (S n) (S m) = dist n m
+
 
 (|-|) = dist
 
 factorial :: Nat -> Nat
-factorial = undefined
+factorial O = S O
+factorial (S O) = S O
+factorial (S n) = S n * factorial n
 
 -- signum of a number (-1, 0, or 1)
 sg :: Nat -> Nat
-sg = undefined
+sg O = O
+sg _ = S O
 
 -- lo b a is the floor of the logarithm base b of a
 lo :: Nat -> Nat -> Nat
-lo = undefined
-
-
+lo O n = undefined
+lo n O = undefined
+lo (S O) n = undefined
+lo n m = if m < n then O else S (lo n (m </> n))
+  
 ----------------------------------------------------------------
 -- Num & Integral fun
 ----------------------------------------------------------------

@@ -64,15 +64,14 @@ instance Ord Nat where
     -- Both are binary functions: max m n = ..., etc.
 
     min :: Nat -> Nat -> Nat
-    min O _ = O
-    min _ O = O
     min (S n) (S m) = S (min n m)
+    min _ _ = O
    
 
     max :: Nat -> Nat -> Nat
-    max O n = n
-    max n O = n
     max (S n) (S m) = S (max n m)
+    max _ n = n
+    max n _ = n
 
 ----------------------------------------------------------------
 -- some sugar
@@ -232,10 +231,12 @@ lo n m = if m < n then O else S (lo n (m </> n))
 -- Do NOT use the following functions in the definitions above!
 
 toNat :: Integral a => a -> Nat
-toNat = undefined
+toNat 0 = O
+toNat x = if x < 0 then undefined else S (toNat(x - 1))
 
 fromNat :: Integral a => Nat -> a
-fromNat = undefined
+fromNat O = 0
+fromNat (S n) = 1 + fromNat n
 
 
 -- Voilá: we can now easily make Nat an instance of Num.
@@ -255,6 +256,6 @@ instance Num Nat where
     signum = sg
     fromInteger x
       | x < 0     = undefined
-      | x == 0    = undefined
-      | otherwise = undefined
+      | x == 0    = O
+      | otherwise = S (fromInteger (x - 1))
 

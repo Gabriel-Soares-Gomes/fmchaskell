@@ -1,4 +1,6 @@
 {-# LANGUAGE GADTs #-}
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Use foldr" #-}
 
 module FMCList where
 
@@ -58,36 +60,47 @@ write [u,v]     for our u `Cons` (v `Cons` Nil)
 -}
 
 head :: [a] -> a
-head = undefined
+head [] = undefined
+head (x : _) = x
 
 tail :: [a] -> [a]
-tail = undefined
+tail [] = undefined
+tail (_ : xs) = xs
 
 null :: [a] -> Bool
-null = undefined
+null [] = True
+null _ = False
 
 length :: Integral i => [a] -> i
-length = undefined
+length [] = 0
+length (x : xs) = 1 + length xs
+
 
 sum :: Num a => [a] -> a
-sum = undefined
+sum [] = 0
+sum (x : xs) = x + sum xs
 
 product :: Num a => [a] -> a
-product = undefined
+product [] = 0
+product (x : xs) = x * product xs
 
 reverse :: [a] -> [a]
-reverse = undefined
+reverse [] = []
+reverse (x : xs) = snoc x (reverse xs) 
 
 (++) :: [a] -> [a] -> [a]
-(++) = undefined
+[] ++  xs = xs
+(x : xs) ++ ys = x : (xs ++ ys)
 
 -- right-associative for performance!
 -- (what?!)
+
 infixr 5 ++
 
 -- (snoc is cons written backwards)
 snoc :: a -> [a] -> [a]
-snoc = undefined
+snoc x [] = [x]
+snoc x2 (x1 : xs) = x1 : snoc x2 xs
 
 (<:) :: [a] -> a -> [a]
 (<:) = flip snoc
@@ -143,7 +156,7 @@ infixl 5 +++
 -- isInfixOf
 -- isSuffixOf
 
--- zip
+--zip
 -- zipWith
 
 -- intercalate

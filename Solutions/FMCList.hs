@@ -115,10 +115,22 @@ xs +++ (y:ys) = (xs +++ [y]) +++ ys
 -- (hmm?!)
 infixl 5 +++
 
--- minimum :: Ord a => [a] -> a
--- maximum :: Ord a => [a] -> a
+minimum :: Ord a => [a] -> a
+minimum [] = error "empty list"
+minimum [x] = x
+minimum [x, y] = if x <= y then x else y
+minimum (x : xs) = minimum (x : [minimum xs])
 
--- take
+maximum :: Ord a => [a] -> a
+maximum [] = error "empty list"
+maximum [x] = x
+maximum [x, y] = if x <= y then y else x
+maximum (x : xs) = maximum (x : [maximum xs])
+
+take :: Int -> [a] -> [a]
+take 0 _ = []
+take n (x : xs) = x : take (n - 1) xs
+
 -- drop
 
 -- takeWhile

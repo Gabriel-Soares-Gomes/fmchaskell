@@ -137,8 +137,14 @@ take n (x : xs) = x : take (n - 1) xs
 -- dropWhile
 
 -- tails
--- init
--- inits
+init :: [a] -> [a]
+init [] = error "empty list"
+init [x] = []
+init (x : xs) = (x : init xs)
+
+inits :: [a] -> [[a]]
+inits [] = [[]]
+inits (x : xs) = undefined
 
 -- subsequences
 
@@ -157,7 +163,11 @@ take n (x : xs) = x : take (n - 1) xs
 
 -- (!!)
 
--- filter
+filter :: (a -> Bool) -> [a] -> [a]
+filter _ [] = []
+filter f (x : xs) = if f x then (x : filter f xs) else filter f xs
+
+
 map :: (a -> b) -> [a] -> [b]
 map _ [] = []
 map f (x : xs) = ((f x) : (map f xs))

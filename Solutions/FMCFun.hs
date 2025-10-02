@@ -27,6 +27,8 @@ flip :: (a -> b -> c) -> (b -> a -> c)
 flip f a b = f b a
 
 -- (.) takes two composable functions and returns their composition
+(.) :: (b -> c) -> (a -> b) -> (a -> c)
+(.) f g a = f (g a)
 
 -- (.>) is composition but in diagramatic notation (should be ; but Haskell forbids)
 (.>) = flip (.)
@@ -34,9 +36,12 @@ flip f a b = f b a
 -- ($) takes a function and a suitable argument and applies the function to the argument
 -- think: why would we ever want that?
 
+($) :: (a -> b) -> a -> b
+($) f a = f a
+
 -- iterate: figure it out by its type
 iterate :: (a -> a) -> a -> [a]
-iterate = undefined
+iterate f a = a : iterate f (f a)
 
 -- orbit
 orbit = flip iterate

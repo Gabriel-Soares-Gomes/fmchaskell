@@ -158,8 +158,10 @@ take n (x : xs) = x : take (n - 1) xs
 -- (!!)
 
 -- filter
--- map
-
+map :: (a -> b) -> [a] -> [b]
+map _ [] = []
+map f (x : xs) = ((f x) : (map f xs))
+ 
 -- cycle
 -- repeat
 -- replicate

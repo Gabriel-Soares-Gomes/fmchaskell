@@ -1,6 +1,10 @@
 {-# LANGUAGE GADTs #-}
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 {-# HLINT ignore "Use foldr" #-}
+{-# HLINT ignore "Use min" #-}
+{-# HLINT ignore "Redundant if" #-}
+{-# HLINT ignore "Use max" #-}
+{-# HLINT ignore "Redundant bracket" #-}
 
 module FMCList where
 
@@ -15,6 +19,7 @@ import Prelude
 import qualified Prelude   as P
 import qualified Data.List as L
 import qualified Data.Char as C
+import GHC.Base (TrName(TrNameD))
 
 {- import qualified ... as ... ?
 
@@ -146,7 +151,7 @@ tails (x : xs) = (x : xs) : tails xs
 init :: [a] -> [a]
 init [] = error "empty list"
 init [x] = []
-init (x : xs) = (x : init xs)
+init (x : xs) = x : init xs
 
 inits :: [a] -> [[a]]
 inits [] = [[]]
@@ -154,8 +159,13 @@ inits (x : xs) = undefined
 
 -- subsequences
 
--- any
--- all
+any :: (a -> Bool) -> [a] -> Bool
+any _ [] = False
+any f (x : xs) = if f x then True else any f xs
+
+all :: (a -> Bool) -> [a] -> Bool
+all _ [] = True 
+all f (x : xs) = if f x then all f xs else False
 
 -- and
 -- or
@@ -178,7 +188,9 @@ map :: (a -> b) -> [a] -> [b]
 map _ [] = []
 map f (x : xs) = ((f x) : (map f xs))
  
--- cycle
+cycle :: [a] -> [a]
+cycle [] = error "empty list"
+cycle xs = xs ++ cycle xs
 -- repeat
 -- replicate
 

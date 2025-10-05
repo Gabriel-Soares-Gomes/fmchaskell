@@ -191,9 +191,14 @@ map f (x : xs) = ((f x) : (map f xs))
 cycle :: [a] -> [a]
 cycle [] = error "empty list"
 cycle xs = xs ++ cycle xs
--- repeat
--- replicate
 
+repeat :: a -> [a]
+repeat x = x : repeat x
+
+replicate :: Int -> a -> [a]
+replicate 0 _ = []
+replicate n x = x : replicate (n - 1) x
+ 
 -- isPrefixOf
 -- isInfixOf
 -- isSuffixOf
@@ -203,7 +208,10 @@ zip [] xs = []
 zip xs [] = []
 zip (x : xs) (y : ys) = (x, y) : zip xs ys
 
--- zipWith
+zipWith :: (a -> b -> c) -> [a] ->[b] -> [c]
+zipWith _ [] _ = []
+zipWith _ _ [] = []
+zipWith f (x : xs) (y : ys) = (f x y) : zipWith f xs ys
 
 -- intercalate
 -- nub

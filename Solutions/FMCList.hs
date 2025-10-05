@@ -186,7 +186,11 @@ map f (x : xs) = ((f x) : (map f xs))
 -- isInfixOf
 -- isSuffixOf
 
---zip
+zip :: [a] -> [b] -> [(a,b)]
+zip [] xs = []
+zip xs [] = []
+zip (x : xs) (y : ys) = (x, y) : zip xs ys
+
 -- zipWith
 
 -- intercalate

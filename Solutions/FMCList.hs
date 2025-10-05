@@ -139,7 +139,10 @@ drop n (x : xs) = drop (n - 1) xs
 -- takeWhile
 -- dropWhile
 
--- tails
+tails :: [a] -> [[a]]
+tails [] = [[]]
+tails (x : xs) = (x : xs) : tails xs
+
 init :: [a] -> [a]
 init [] = error "empty list"
 init [x] = []

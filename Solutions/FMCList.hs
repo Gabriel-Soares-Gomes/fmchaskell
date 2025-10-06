@@ -146,7 +146,7 @@ drop n (x : xs) = drop (n - 1) xs
 
 takeWhile :: (a -> Bool) -> [a] -> [a]
 takeWhile f [] = []
-takeWhile f (x:xs) = if p x then x : takeWhile p xs else []
+takeWhile f (x:xs) = if f x then x : takeWhile f xs else []
 
 dropWhile :: (a -> Bool) -> [a] -> [a]
 dropWhile f [] = []
@@ -220,13 +220,17 @@ replicate :: Int -> a -> [a]
 replicate 0 _ = []
 replicate n x = x : replicate (n - 1) x
  
-isPrefixOf :: Eq a -> [a] -> [a] -> Bool
+isPrefixOf :: Eq a => [a] -> [a] -> Bool
 isPrefixOf [] _ = True
 isPrefixOf _ [] = False
 isPrefixOf (x : xs) (y : ys) = if x == y then isPrefixOf xs ys else False
 
 -- isInfixOf
--- isSuffixOf
+isSuffixOf :: Eq a => [a] -> [a] -> Bool
+isSuffixOf [] _ = True
+isSuffixOf _ [] = False
+isSuffixOf xs (y:ys) = if xs == (y : ys) then True else isSuffixOf xs ys
+
 
 zip :: [a] -> [b] -> [(a,b)]
 zip [] xs = []

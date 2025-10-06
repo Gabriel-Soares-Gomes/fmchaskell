@@ -5,6 +5,8 @@
 {-# HLINT ignore "Redundant if" #-}
 {-# HLINT ignore "Use max" #-}
 {-# HLINT ignore "Redundant bracket" #-}
+{-# HLINT ignore "Eta reduce" #-}
+{-# HLINT ignore "Use elem" #-}
 
 module FMCList where
 
@@ -141,8 +143,13 @@ drop 0 xs = xs
 drop n [] = []
 drop n (x : xs) = drop (n - 1) xs
 
--- takeWhile
--- dropWhile
+takeWhile :: (a -> Bool) -> [a] -> [a]
+takeWhile f [] = []
+takeWhile f (x:xs) = if p x then x : takeWhile p xs else []
+
+dropWhile :: (a -> Bool) -> [a] -> [a]
+dropWhile f [] = []
+dropWhile f (x:xs) = if f x then dropWhile f xs else (x:xs)
 
 tails :: [a] -> [[a]]
 tails [] = [[]]
@@ -167,18 +174,30 @@ all :: (a -> Bool) -> [a] -> Bool
 all _ [] = True 
 all f (x : xs) = if f x then all f xs else False
 
--- and
--- or
+and :: [Bool] -> Bool
+and [] = True
+and (x:xs) = if x then and xs else False
 
--- concat
+or :: [Bool] -> Bool
+or [] = False
+or (x:xs) = if x then True else or xs
 
--- elem using the funciton 'any' above
+concat :: [[a]] -> [a]
+concat [] = []
+concat (xs : ys) = xs ++ concat ys
 
--- elem': same as elem but elementary definition
--- (without using other functions except (==))
+elem :: Eq a => a -> [a] -> Bool
+elem x xs = any (== x) xs
 
--- (!!)
+elem' :: Eq a => a -> [a] -> Bool
+elem' n [] = False
+elem' n (x : xs) = if n == x then True else elem' n xs 
 
+(!!) :: [a] -> Int -> a
+[] !! _ = error "index out of range"
+(x : xs) !! 0 = x 
+(x : xs) !! n = xs !! (n - 1)
+ 
 filter :: (a -> Bool) -> [a] -> [a]
 filter _ [] = []
 filter f (x : xs) = if f x then (x : filter f xs) else filter f xs

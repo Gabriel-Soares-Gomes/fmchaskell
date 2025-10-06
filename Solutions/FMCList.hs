@@ -7,6 +7,7 @@
 {-# HLINT ignore "Redundant bracket" #-}
 {-# HLINT ignore "Eta reduce" #-}
 {-# HLINT ignore "Use elem" #-}
+{-# HLINT ignore "Use infix" #-}
 
 module FMCList where
 
@@ -219,7 +220,11 @@ replicate :: Int -> a -> [a]
 replicate 0 _ = []
 replicate n x = x : replicate (n - 1) x
  
--- isPrefixOf
+isPrefixOf :: Eq a -> [a] -> [a] -> Bool
+isPrefixOf [] _ = True
+isPrefixOf _ [] = False
+isPrefixOf (x : xs) (y : ys) = if x == y then isPrefixOf xs ys else False
+
 -- isInfixOf
 -- isSuffixOf
 

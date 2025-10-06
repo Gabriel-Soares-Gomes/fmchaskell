@@ -164,7 +164,9 @@ inits :: [a] -> [[a]]
 inits [] = [[]]
 inits (x : xs) = undefined
 
--- subsequences
+subsequences :: [a] -> [[a]]
+subsequences [] = [[]]
+subsequences (x:xs) = subsequences xs ++ map (x:) (subsequences xs)
 
 any :: (a -> Bool) -> [a] -> Bool
 any _ [] = False
@@ -201,7 +203,6 @@ elem' n (x : xs) = if n == x then True else elem' n xs
 filter :: (a -> Bool) -> [a] -> [a]
 filter _ [] = []
 filter f (x : xs) = if f x then (x : filter f xs) else filter f xs
-
 
 map :: (a -> b) -> [a] -> [b]
 map _ [] = []
